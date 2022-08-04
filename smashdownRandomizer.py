@@ -1,7 +1,7 @@
 #author: John Adler
 
 from simplegraphics import *
-#from threading import Thread
+import threading
 import random
 import time
 import sys
@@ -36,7 +36,7 @@ def main():
         ["Ganondorf", "ganondorf.png"],
         ["Mewtwo", "mewtwo.png"],
         ["Roy", "roy.png"],
-        ["Mr. Game & Watch", "gamewatch.png"],
+        ["Game & Watch", "gamewatch.png"],
         ["Meta Knight", "metaknight.png"],
         ["Pit", "pit.png"],
         ["Zero Suit Samus", "zerosuit.png"],
@@ -126,7 +126,7 @@ def main():
         ["Ganondorf", "ganondorf.png"],
         ["Mewtwo", "mewtwo.png"],
         ["Roy", "roy.png"],
-        ["Mr. Game & Watch", "gamewatch.png"],
+        ["Game & Watch", "gamewatch.png"],
         ["Meta Knight", "metaknight.png"],
         ["Pit", "pit.png"],
         ["Zero Suit Samus", "zerosuit.png"],
@@ -192,6 +192,7 @@ def main():
     draw_canvas()
     #This outer while loop is to make the back button function
     while closeApp == False:
+        
         draw_player_number_selection()
 
         numPlayers = player_number_selection()
@@ -208,6 +209,7 @@ def main():
             if charsLeft == 0:
                 #write no characters left, returning to player selection
                 draw_string("No characters left, return to player selection screen on click", 300, 75, 16)
+                characterRoster = backupRoster
                 wait_for_click()
                 clear_canvas()
                 break
@@ -223,9 +225,12 @@ def main():
                     draw_string(str(charsLeft), 250, 25, 25)
                     continue
                 elif status == "Back":
+                    characterRoster = backupRoster
                     break
-                else:
+                elif status == "Random":
                     charsLeft -= 1
+                    if charsLeft < 0:
+                        charsLeft = 0
                     #draws circle and number of characters left in roster
                     set_color("white")
                     draw_filled_rect(230, 10, 40, 30)
@@ -233,7 +238,8 @@ def main():
                     draw_string(str(charsLeft), 250, 25, 25)
 
                     
-            elif numPlayers == "2 Player":
+            elif numPlayers == "2 Players":
+                status = two_player_screen(characterRoster, charsLeft, backupRoster)
                 if status == "Restart":
                     characterRoster = backupRoster
                     charsLeft = set_character_number(game)
@@ -244,9 +250,12 @@ def main():
                     draw_string(str(charsLeft), 250, 25, 25)
                     continue
                 elif status == "Back":
+                    characterRoster = backupRoster
                     break
                 else:
-                    charsLeft -= 1
+                    charsLeft -= 2
+                    if charsLeft < 0:
+                        charsLeft = 0
                     #draws circle and number of characters left in roster
                     set_color("white")
                     draw_filled_rect(230, 10, 40, 30)
@@ -254,7 +263,8 @@ def main():
                     draw_string(str(charsLeft), 250, 25, 25)
 
                     
-            elif numPlayers == "3 Player":
+            elif numPlayers == "3 Players":
+                status = three_player_screen(characterRoster, charsLeft, backupRoster)
                 if status == "Restart":
                     characterRoster = backupRoster
                     charsLeft = set_character_number(game)
@@ -265,9 +275,12 @@ def main():
                     draw_string(str(charsLeft), 250, 25, 25)
                     continue
                 elif status == "Back":
+                    characterRoster = backupRoster
                     break
                 else:
-                    charsLeft -= 1
+                    charsLeft -= 3
+                    if charsLeft < 0:
+                        charsLeft = 0
                     #draws circle and number of characters left in roster
                     set_color("white")
                     draw_filled_rect(230, 10, 40, 30)
@@ -275,7 +288,8 @@ def main():
                     draw_string(str(charsLeft), 250, 25, 25)
 
                     
-            elif numPlayers == "4 Player":
+            elif numPlayers == "4 Players":
+                status = four_player_screen(characterRoster, charsLeft, backupRoster)
                 if status == "Restart":
                     characterRoster = backupRoster
                     charsLeft = set_character_number(game)
@@ -286,9 +300,12 @@ def main():
                     draw_string(str(charsLeft), 250, 25, 25)
                     continue
                 elif status == "Back":
+                    characterRoster = backupRoster
                     break
                 else:
-                    charsLeft -= 1
+                    charsLeft -= 4
+                    if charsLeft < 0:
+                        charsLeft = 0
                     #draws circle and number of characters left in roster
                     set_color("white")
                     draw_filled_rect(230, 10, 40, 30)
@@ -319,7 +336,8 @@ def draw_canvas_elements(numPlayers):
         draw_string("Characters Left:", 125, 25, 25)
 
         set_color("white")
-        draw_filled_circle(250, 250, 128)
+        draw_filled_circle(150, 250, 128)
+        draw_filled_circle(450, 250, 128)
 
         draw_button(200, 400, 100, 40, "Restart", 20, "white")
         draw_button(350, 400, 100, 40, "Random", 20, "white")
@@ -330,7 +348,9 @@ def draw_canvas_elements(numPlayers):
         draw_string("Characters Left:", 125, 25, 25)
 
         set_color("white")
-        draw_filled_circle(250, 250, 128)
+        draw_filled_circle(150, 150, 90)
+        draw_filled_circle(450, 150, 90)
+        draw_filled_circle(300, 300, 90)
 
         draw_button(200, 400, 100, 40, "Restart", 20, "white")
         draw_button(350, 400, 100, 40, "Random", 20, "white")
@@ -341,7 +361,10 @@ def draw_canvas_elements(numPlayers):
         draw_string("Characters Left:", 125, 25, 25)
 
         set_color("white")
-        draw_filled_circle(250, 250, 128)
+        draw_filled_circle(200, 125, 70)
+        draw_filled_circle(400, 125, 70)
+        draw_filled_circle(200, 300, 70)
+        draw_filled_circle(400, 300, 70)
 
         draw_button(200, 400, 100, 40, "Restart", 20, "white")
         draw_button(350, 400, 100, 40, "Random", 20, "white")
@@ -375,29 +398,29 @@ def player_number_selection():
 
         if clickX >= 250 and clickX <= 350 and clickY >= 100 and clickY <= 200:
             #button click graphic
-            draw_button(250, 100, 100, 100, "2 Player", 20, "grey")
+            draw_button(250, 100, 100, 100, "2 Players", 20, "grey")
             time.sleep(0.1)
-            draw_button(250, 100, 100, 100, "2 Player", 20, "red")
+            draw_button(250, 100, 100, 100, "2 Players", 20, "red")
         
             clear_canvas()
-            return "2 Player"
+            return "2 Players"
 
         if clickX >= 400 and clickX <=500 and clickY >= 100 and clickY <= 200:
             #button click graphic
-            draw_button(400, 100, 100, 100, "3 Player", 20, "grey")
+            draw_button(400, 100, 100, 100, "3 Players", 20, "grey")
             time.sleep(0.1)
-            draw_button(400, 100, 100, 100, "3 Player", 20, "light blue")
+            draw_button(400, 100, 100, 100, "3 Players", 20, "light blue")
             clear_canvas()
-            return "3 Player"
+            return "3 Players"
 
         if clickX >= 100 and clickX <= 200 and clickY >= 250 and clickY <= 350:
             #button click graphic
-            draw_button(100, 250, 100, 100, "4 Player", 20, "grey")
+            draw_button(100, 250, 100, 100, "4 Players", 20, "grey")
             time.sleep(0.1)
-            draw_button(100, 250, 100, 100, "4 Player", 20, "gold")
+            draw_button(100, 250, 100, 100, "4 Players", 20, "gold")
         
             clear_canvas()
-            return "4 Player"
+            return "4 Players"
     
         if clickX >= 50 and clickX <= 150 and clickY >= 400 and clickY <= 440:
             #button click graphic
@@ -506,7 +529,7 @@ def random_character(maxCharacters):
     randInd = random.randint(0, maxCharacters)
     return randInd
 
-def random_button_clicked(characterRoster, charsLeft):
+def random_button_clicked(characterRoster, charsLeft, xCoord, yCoord, size):
     draw_button(350, 400, 100, 40, "Random", 20, "grey")
     time.sleep(0.08)
     draw_button(350, 400, 100, 40, "Random", 20, "white")
@@ -515,60 +538,60 @@ def random_button_clicked(characterRoster, charsLeft):
 
     #print("Random Button Clicked")
     set_color("white")
-    draw_filled_circle(250, 250, 128)
+    draw_filled_circle(xCoord, yCoord, size)
             
     set_color("black")
-    draw_string(characterRoster[randomCharacter][0], 250, 325, 20)
+    draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)
            
-    draw_image(characterRoster[randomCharacter][1], 250, 250)
+    draw_image(characterRoster[randomCharacter][1], xCoord, yCoord)
 
     time.sleep(0.15)
 
     randomCharacter = random_character(charsLeft)
 
     set_color("white")
-    draw_filled_circle(250, 250, 128)
+    draw_filled_circle(xCoord, yCoord, size)
             
     set_color("black")
-    draw_string(characterRoster[randomCharacter][0], 250, 325, 20)
+    draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)
             
-    draw_image(characterRoster[randomCharacter][1], 250, 250)
+    draw_image(characterRoster[randomCharacter][1], xCoord, yCoord)
 
     time.sleep(0.18)
 
     randomCharacter = random_character(charsLeft)
 
     set_color("white")
-    draw_filled_circle(250, 250, 128)
+    draw_filled_circle(xCoord, yCoord, size)
             
     set_color("black")
-    draw_string(characterRoster[randomCharacter][0], 250, 325, 20)
+    draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)
             
-    draw_image(characterRoster[randomCharacter][1], 250, 250)
+    draw_image(characterRoster[randomCharacter][1], xCoord, yCoord)
 
     time.sleep(0.2)
 
     randomCharacter = random_character(charsLeft)
 
     set_color("white")
-    draw_filled_circle(250, 250, 128)
+    draw_filled_circle(xCoord, yCoord, size)
             
     set_color("black")
-    draw_string(characterRoster[randomCharacter][0], 250, 325, 20)
+    draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)
             
-    draw_image(characterRoster[randomCharacter][1], 250, 250)
+    draw_image(characterRoster[randomCharacter][1], xCoord, yCoord)
 
     time.sleep(0.4)
 
     randomCharacter = random_character(charsLeft)
 
     set_color("white")
-    draw_filled_circle(250, 250, 128)
+    draw_filled_circle(xCoord, yCoord, size)
             
     set_color("black")
-    draw_string(characterRoster[randomCharacter][0], 250, 325, 20)
+    draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)
             
-    draw_image(characterRoster[randomCharacter][1], 250, 250)
+    draw_image(characterRoster[randomCharacter][1], xCoord, yCoord)
     
     del characterRoster[randomCharacter]
 
@@ -620,7 +643,157 @@ def one_player_screen(characterRoster, charsLeft, backupRoster):
     #random button
     if clickX >= 350 and clickX <= 450 and clickY >= 400 and clickY <= 440:
 
-        random_button_clicked(characterRoster, charsLeft)
+        random_button_clicked(characterRoster, charsLeft, 250, 250, 128)
+            
+    #close button 
+    if clickX >= 50 and clickX <= 150 and clickY >= 400 and clickY <= 440:
+        #button click graphic
+        draw_button(50, 400, 100, 40, "Close", 20, "grey")
+        time.sleep(0.01)
+        draw_button(50, 400, 100, 40, "Close", 20, "white")
+                
+        close_canvas()
+        sys.exit()
+
+    #back button
+    if clickX >= 10 and clickX <= 90 and clickY >= 450 and clickY <= 482:
+        clear_canvas()
+        return "Back"
+
+def two_player_screen(characterRoster, charsLeft, backupRoster):
+    #draws filled rectangle and number of characters left in roster
+    set_color("white")
+    draw_filled_rect(230, 10, 40, 30)
+    set_color("black")
+    draw_string(str(charsLeft), 250, 25, 25)
+
+    #waits for click
+    wait_for_click()
+    clickX = get_last_click_x()
+    clickY = get_last_click_y()
+                
+    #tests to see if click hit a button
+
+    #restart button
+    if clickX >= 200 and clickX <= 300 and clickY >= 400 and clickY <= 440:
+        #print("Restart Button Clicked")
+        draw_button(200, 400, 100, 40, "Restart", 20, "grey")
+        time.sleep(0.1)
+        draw_button(200, 400, 100, 40, "Restart", 20, "white")
+
+        set_color("white")
+        draw_filled_circle(150, 250, 128)
+        draw_filled_circle(450, 250, 128)
+            
+        return "Restart"
+
+    #random button
+    if clickX >= 350 and clickX <= 450 and clickY >= 400 and clickY <= 440:
+        #threading goes here
+        random_button_clicked(characterRoster, charsLeft, 150, 250, 128)
+        random_button_clicked(characterRoster, charsLeft, 450, 250, 128)
+            
+    #close button 
+    if clickX >= 50 and clickX <= 150 and clickY >= 400 and clickY <= 440:
+        #button click graphic
+        draw_button(50, 400, 100, 40, "Close", 20, "grey")
+        time.sleep(0.01)
+        draw_button(50, 400, 100, 40, "Close", 20, "white")
+                
+        close_canvas()
+        sys.exit()
+
+    #back button
+    if clickX >= 10 and clickX <= 90 and clickY >= 450 and clickY <= 482:
+        clear_canvas()
+        return "Back"
+
+def three_player_screen(characterRoster, charsLeft, backupRoster):
+    #draws filled rectangle and number of characters left in roster
+    set_color("white")
+    draw_filled_rect(230, 10, 40, 30)
+    set_color("black")
+    draw_string(str(charsLeft), 250, 25, 25)
+
+    #waits for click
+    wait_for_click()
+    clickX = get_last_click_x()
+    clickY = get_last_click_y()
+                
+    #tests to see if click hit a button
+
+    #restart button
+    if clickX >= 200 and clickX <= 300 and clickY >= 400 and clickY <= 440:
+        #print("Restart Button Clicked")
+        draw_button(200, 400, 100, 40, "Restart", 20, "grey")
+        time.sleep(0.1)
+        draw_button(200, 400, 100, 40, "Restart", 20, "white")
+
+        set_color("white")
+        draw_filled_circle(150, 150, 90)
+        draw_filled_circle(450, 150, 90)
+        draw_filled_circle(300, 300, 90)
+            
+        return "Restart"
+
+    #random button
+    if clickX >= 350 and clickX <= 450 and clickY >= 400 and clickY <= 440:
+        #threading goes here
+        random_button_clicked(characterRoster, charsLeft, 150, 150, 90)
+        random_button_clicked(characterRoster, charsLeft, 450, 150, 90)
+        random_button_clicked(characterRoster, charsLeft, 300, 300, 90)
+            
+    #close button 
+    if clickX >= 50 and clickX <= 150 and clickY >= 400 and clickY <= 440:
+        #button click graphic
+        draw_button(50, 400, 100, 40, "Close", 20, "grey")
+        time.sleep(0.01)
+        draw_button(50, 400, 100, 40, "Close", 20, "white")
+                
+        close_canvas()
+        sys.exit()
+
+    #back button
+    if clickX >= 10 and clickX <= 90 and clickY >= 450 and clickY <= 482:
+        clear_canvas()
+        return "Back"
+
+def four_player_screen(characterRoster, charsLeft, backupRoster):
+    #draws filled rectangle and number of characters left in roster
+    set_color("white")
+    draw_filled_rect(230, 10, 40, 30)
+    set_color("black")
+    draw_string(str(charsLeft), 250, 25, 25)
+
+    #waits for click
+    wait_for_click()
+    clickX = get_last_click_x()
+    clickY = get_last_click_y()
+                
+    #tests to see if click hit a button
+
+    #restart button
+    if clickX >= 200 and clickX <= 300 and clickY >= 400 and clickY <= 440:
+        #print("Restart Button Clicked")
+        draw_button(200, 400, 100, 40, "Restart", 20, "grey")
+        time.sleep(0.1)
+        draw_button(200, 400, 100, 40, "Restart", 20, "white")
+
+        set_color("white")
+        draw_filled_circle(200, 125, 70)
+        draw_filled_circle(400, 125, 70)
+        draw_filled_circle(200, 300, 70)
+        draw_filled_circle(400, 300, 70)
+            
+        return "Restart"
+
+    #random button
+    if clickX >= 350 and clickX <= 450 and clickY >= 400 and clickY <= 440:
+        #threading goes here
+        random_button_clicked(characterRoster, charsLeft, 200, 125, 70)
+        random_button_clicked(characterRoster, charsLeft, 400, 125, 70)
+        random_button_clicked(characterRoster, charsLeft, 200, 300, 70)
+        random_button_clicked(characterRoster, charsLeft, 400, 300, 70)
             
     #close button 
     if clickX >= 50 and clickX <= 150 and clickY >= 400 and clickY <= 440:
