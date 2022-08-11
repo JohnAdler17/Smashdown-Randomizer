@@ -99,100 +99,12 @@ def main():
     ]
 
     #identical copy of characterRoster to be copied to characterRoster when restart is clicked
-    backupRoster = [
-        ["Mario", 'mario.png'],
-        ["Donkey Kong", "dk.png"],
-        ["Link", "link.png"],
-        ["Samus", "samus.png"],
-        ["Yoshi", "yoshi.png"],
-        ["Kirby", "kirby.png"],
-        ["Fox", "fox.png"],
-        ["Pikachu", "pikachu.png"],
-        ["Luigi", "luigi.png"],
-        ["Ness", "ness.png"],
-        ["Captain Falcon", "cptfalcon.png"],
-        ["Jigglypuff", "jigglypuff.png"],
-        ["Peach", "peach.png"],
-        ["Bowser", "bowser.png"],
-        ["Ice Climbers", "iceclimbers.png"],
-        ["Sheik", "sheik.png"],
-        ["Zelda", "zelda.png"],
-        ["Dr. Mario", "drmario.png"],
-        ["Pichu", "pichu.png"],
-        ["Falco", "falco.png"],
-        ["Marth", "marth.png"],
-        ["Young Link", "younglink.png"],
-        ["Ganondorf", "ganondorf.png"],
-        ["Mewtwo", "mewtwo.png"],
-        ["Roy", "roy.png"],
-        ["Game & Watch", "gamewatch.png"],
-        ["Meta Knight", "metaknight.png"],
-        ["Pit", "pit.png"],
-        ["Zero Suit Samus", "zerosuit.png"],
-        ["Wario", "wario.png"],
-        ["Snake", "snake.png"],
-        ["Ike", "ike.png"],
-        ["Pokemon Trainer", "trainer.png"],
-        ["Diddy Kong", "diddykong.png"],
-        ["Lucas", "lucas.png"],
-        ["Sonic", "sonic.png"],
-        ["King Dedede", "dedede.png"],
-        ["Olimar", "olimar.png"],
-        ["Lucario", "lucario.png"],
-        ["R.O.B.", "rob.png"],
-        ["Toon Link", "toonlink.png"],
-        ["Wolf", "wolf.png"],
-        ["Villager", "villager.png"],
-        ["Mega Man", "megaman.png"],
-        ["Wii Fit Trainer", "wiifit.png"],
-        ["Rosalina & Luma", "rosalina.png"],
-        ["Little Mac", "littlemac.png"],
-        ["Greninja", "greninja.png"],
-        ["Mii Brawler", "brawler.png"],
-        ["Mii Swordfighter", "swordfighter.png"],
-        ["Mii Gunner", "gunner.png"],
-        ["Palutena", "palutena.png"],
-        ["Pac-man", "pacman.png"],
-        ["Robin", "robin.png"],
-        ["Shulk", "shulk.png"],
-        ["Bowser Jr.", "bowserjr.png"],
-        ["Duck Hunt", "duckhunt.png"],
-        ["Ryu", "ryu.png"],
-        ["Cloud", "cloud.png"],
-        ["Corrin", "corrin.png"],
-        ["Bayonetta", "bayonetta.png"],
-        ["Inkling", "inkling.png"],
-        ["Ridley", "ridley.png"],
-        ["Simon", "simon.png"],
-        ["King K. Rool", "kkrool.png"],
-        ["Isabelle", "isabelle.png"],
-        ["Incineroar", "peach.png"],
-        ["Piranha Plant", "piranha.png"],
-        ["Joker", "joker.png"],
-        ["Hero", "hero.png"],
-        ["Banjo & Kazooie", "banjo.png"],
-        ["Terry", "terry.png"],
-        ["Byleth", "byleth.png"],
-        ["Min Min", "minmin.png"],
-        ["Steve", "steve.png"],
-        ["Sephiroth", "sephiroth.png"],
-        ["Pyra/Mythra", "pythra.png"],
-        ["Kazuya", "kazuya.png"],
-        ["Sora", "sora.png"],
-        ["Dark Samus", "darksamus.png"],
-        ["Daisy", "daisy.png"],
-        ["Lucina", "lucina.png"],
-        ["Chrom", "chrom.png"],
-        ["Dark Pit", "darkpit.png"],
-        ["Ken", "ken.png"],
-        ["Richter", "richter.png"]
-    ]
+    backupRoster = list(characterRoster)
 
     draw_canvas()
     #This outer while loop is to make the back button function
     while closeApp == False:
         
-        characterRoster.clear()
         characterRoster = list(backupRoster)
         
         draw_player_number_selection()
@@ -234,6 +146,8 @@ def main():
                 wait_for_click()
                 clear_canvas()
                 break
+            elif status == "Missed click":
+                continue
             else:
                 charsLeft = int(status)
             
@@ -381,7 +295,7 @@ def game_selection():
             #Smash64
             #button click graphic
             draw_button(100, 100, 100, 100, "Smash64", 20, "grey")
-            time.sleep(0.1)
+            time.sleep(0.01)
             draw_button(100, 100, 100, 100, "Smash64", 20, "light green")
         
             clear_canvas()
@@ -391,7 +305,7 @@ def game_selection():
             #Melee
             #button click graphic
             draw_button(250, 100, 100, 100, "Melee", 20, "grey")
-            time.sleep(0.1)
+            time.sleep(0.01)
             draw_button(250, 100, 100, 100, "Melee", 20, "green")
         
             clear_canvas()
@@ -401,8 +315,9 @@ def game_selection():
             #Brawl
             #button click graphic
             draw_button(400, 100, 100, 100, "Brawl", 20, "grey")
-            time.sleep(0.1)
+            time.sleep(0.01)
             draw_button(400, 100, 100, 100, "Brawl", 20, "purple")
+            
             clear_canvas()
             return "Brawl"
 
@@ -410,7 +325,7 @@ def game_selection():
             #Sm4sh
             #button click graphic
             draw_button(100, 250, 100, 100, "Sm4sh", 20, "grey")
-            time.sleep(0.1)
+            time.sleep(0.01)
             draw_button(100, 250, 100, 100, "Sm4sh", 20, "azure")
         
             clear_canvas()
@@ -420,7 +335,7 @@ def game_selection():
             #Ultimate
             #button click graphic
             draw_button(250, 250, 100, 100, "Ultimate", 20, "grey")
-            time.sleep(0.1)
+            time.sleep(0.01)
             draw_button(250, 250, 100, 100, "Ultimate", 20, "pink")
         
             clear_canvas()
@@ -428,6 +343,9 @@ def game_selection():
 
         if clickX >= 10 and clickX <= 90 and clickY >= 450 and clickY <= 482:
             clear_canvas()
+            draw_button(10, 450, 80, 32, "Back", 20, "grey")
+            time.sleep(0.01)
+            draw_button(10, 450, 80, 32, "Back", 20, "white")
             return "Back"
     
         if clickX >= 50 and clickX <= 150 and clickY >= 400 and clickY <= 440:
@@ -468,7 +386,7 @@ def random_button_clicked(characterRoster, charsLeft, xCoord, yCoord, size):
     set_color("white")
     draw_filled_circle(xCoord, yCoord, size)
     set_color("black")
-    draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)
+    #draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)
     draw_image(characterRoster[randomCharacter][1], xCoord, yCoord)
     time.sleep(0.15)
 
@@ -476,7 +394,7 @@ def random_button_clicked(characterRoster, charsLeft, xCoord, yCoord, size):
     set_color("white")
     draw_filled_circle(xCoord, yCoord, size)
     set_color("black")
-    draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)
+    #draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)
     draw_image(characterRoster[randomCharacter][1], xCoord, yCoord)
     time.sleep(0.18)
 
@@ -484,7 +402,7 @@ def random_button_clicked(characterRoster, charsLeft, xCoord, yCoord, size):
     set_color("white")
     draw_filled_circle(xCoord, yCoord, size)
     set_color("black")
-    draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)  
+    #draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)  
     draw_image(characterRoster[randomCharacter][1], xCoord, yCoord)
     time.sleep(0.2)
 
@@ -492,7 +410,7 @@ def random_button_clicked(characterRoster, charsLeft, xCoord, yCoord, size):
     set_color("white")
     draw_filled_circle(xCoord, yCoord, size)
     set_color("black")
-    draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)
+    #draw_string(characterRoster[randomCharacter][0], xCoord, yCoord + 2 * size/3, size/6)
     draw_image(characterRoster[randomCharacter][1], xCoord, yCoord)
     time.sleep(0.4)
 
@@ -549,7 +467,7 @@ def player_screen(characterRoster, charsLeft, numPlayers):
     if clickX >= 200 and clickX <= 300 and clickY >= 400 and clickY <= 440:
         #print("Restart Button Clicked")
         draw_button(200, 400, 100, 40, "Restart", 20, "grey")
-        time.sleep(0.1)
+        time.sleep(0.04)
         draw_button(200, 400, 100, 40, "Restart", 20, "white")
         set_color("white")
         if numPlayers == "1 Player":
@@ -576,7 +494,8 @@ def player_screen(characterRoster, charsLeft, numPlayers):
     if clickX >= 350 and clickX <= 450 and clickY >= 400 and clickY <= 440:
         draw_button(350, 400, 100, 40, "Random", 20, "grey")
         time.sleep(0.08)
-        draw_canvas_elements(numPlayers)
+        draw_button(350, 400, 100, 40, "Random", 20, "white")
+        set_color("white")
         
         if numPlayers == "1 Player":
             charsLeft = random_button_clicked(characterRoster, charsLeft, 250, 250, 128)
@@ -584,6 +503,7 @@ def player_screen(characterRoster, charsLeft, numPlayers):
                 return "NoChars"
             return charsLeft
         elif numPlayers == "2 Players":
+            draw_filled_circle(450, 250, 128)
             charsLeft = random_button_clicked(characterRoster, charsLeft, 150, 250, 128)
             if charsLeft == -1:
                 return "NoChars"
@@ -592,6 +512,8 @@ def player_screen(characterRoster, charsLeft, numPlayers):
                 return "NoChars"
             return charsLeft
         elif numPlayers == "3 Players":
+            draw_filled_circle(450, 150, 90)
+            draw_filled_circle(300, 300, 90)
             charsLeft = random_button_clicked(characterRoster, charsLeft, 150, 150, 90)
             if charsLeft == -1:
                 return "NoChars"
@@ -603,6 +525,9 @@ def player_screen(characterRoster, charsLeft, numPlayers):
                 return "NoChars"
             return charsLeft
         else:
+            draw_filled_circle(400, 125, 85)
+            draw_filled_circle(200, 300, 85)
+            draw_filled_circle(400, 300, 85)
             charsLeft = random_button_clicked(characterRoster, charsLeft, 200, 125, 85)
             if charsLeft == -1:
                 return "NoChars"
@@ -629,7 +554,12 @@ def player_screen(characterRoster, charsLeft, numPlayers):
 
     #back button
     if clickX >= 10 and clickX <= 90 and clickY >= 450 and clickY <= 482:
+        draw_button(10, 450, 80, 32, "Back", 20, "grey")
+        time.sleep(0.01)
+        draw_button(10, 450, 80, 32, "Back", 20, "white")
         clear_canvas()
         return "Back"
+
+    return "Missed click"
 
 main()
